@@ -106,6 +106,8 @@ class ProductController extends Controller
 
         $this->prepEditProductVariables($variables);
 
+        $product = $variables['product'];
+
         /** @var Product $product */
         $variables['bodyClass'] = 'edit-product';
         if (CraftShopify::$plugin->getSettings()->previewPath) {
