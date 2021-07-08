@@ -1,0 +1,62 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Craft Shopify plugin for Craft CMS
+ *
+ * CraftShopifyUtility Utility Content
+ *
+ * @author    One Design Company
+ * @copyright Copyright (c) 2021 One Design Company
+ * @link      https://onedesigncompany.com/
+ * @package   CraftShopify
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+<h1>Craft Shopify</h1>
+
+<div>
+  <form class="utility" method="post">
+    {{ csrfInput() }}
+    {{ actionInput('craft-shopify/product/sync-products') }}
+    {{ hiddenInput('productIds', '*') }}
+
+    <h2>Sync Products</h2>
+
+    <div>
+      <button type="submit" class="btn submit">
+        Sync All Products
+      </button>
+    </div>
+  </form>
+</div>
+<hr>
+<div>
+  <form class="utility" method="post">
+    {{ csrfInput() }}
+    {{ actionInput('craft-shopify/product/sync-products') }}
+
+    <h2>Sync Product by Shopify ID</h2>
+
+    {{ forms.editableTableField({
+      name: 'productIds',
+      id: 'productIds',
+      cols: [{
+        type: 'singleline',
+        heading: 'Product IDs'|t('blitz'),
+        placeholder: '6636263243943',
+        code: true,
+      }],
+      addRowLabel: "Add Product ID"|t('blitz'),
+      first: true,
+    }) }}
+
+    <div>
+      <button type="submit" class="btn submit">
+        Sync Products
+      </button>
+    </div>
+  </form>
+</div>

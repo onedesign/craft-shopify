@@ -1,0 +1,18 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Craft Shopify plugin for Craft CMS 3.x
+ *
+ * Craft Shopify index.twig
+ *
+ * @author    One Design Company
+ * @copyright Copyright (c) 2021 One Design Company
+ * @link      https://onedesigncompany.com/
+ * @package   CraftShopify
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/elementindex" %}
+{% set title = "Shopify Products"|t('craft-shopify') %}
+{% set elementType = 'onedesign\\craftshopify\\elements\\Product' %}

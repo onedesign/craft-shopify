@@ -1,0 +1,51 @@
+{% requireAdmin %}
+{% extends '_layouts/cp' %}
+
+{% set crumbs = [
+  { label: "Craft Shopify"|t('app'), url: url('craft-shopify') },
+  { label: "Settings"|t('app'), url: url('craft-shopify/settings') }
+] | merge(crumbs | default([])) %}
+
+{% import "_includes/forms" as forms %}
+
+{% set title = 'Craft Shopify' %}
+{% set docTitle = 'Craft Shopify Settings' %}
+{% set selectedSubnavItem = 'settings' %}
+
+{% do view.registerAssetBundle("onedesign\\craftshopify\\assetbundles\\craftshopify\\CraftShopifyAsset") %}
+
+{% set navItems = {
+  'field-layouts': {
+    label: 'Field Layouts',
+    url: 'craft-shopify/settings/field-layouts'
+  }
+} %}
+
+{% if currentUser.admin %}
+  {% set navItems = navItems | merge({
+    'templates': {
+      label: 'Templates',
+      url: 'craft-shopify/settings/templates'
+    },
+    'shopify': {
+      label: 'Shopify',
+      url: 'craft-shopify/settings/shopify'
+    }
+  }) %}
+{% endif %}
+
+{% set selectedSetting = selectedSetting ?? 'field-layouts' %}
+
+{% block sidebar %}
+  <nav>
+    <ul>
+      {% for id, item in navItems %}
+        <li>
+          <a href="{{ cpUrl(item.url) }}" id="{{ id }}NavItem" class="{% if selectedSetting == id %}sel{% endif %}">
+            {{ item.label }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endblock %}

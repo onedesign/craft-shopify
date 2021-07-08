@@ -1,0 +1,44 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{% extends 'craft-shopify/settings/_layout' %}
+{% import "_includes/forms" as forms %}
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+  {
+    label: 'Templates',
+    url: url('craft-shopify/settings/templates')
+  }
+] %}
+
+{% set selectedSetting = 'templates' %}
+
+{% block content %}
+  <h2>Templates</h2>
+  {{ actionInput('plugins/save-plugin-settings') }}
+  {{ hiddenInput('pluginHandle', plugin.handle) }}
+  {{ csrfInput() }}
+
+  {% namespace 'settings' %}
+    {{ forms.autosuggestField({
+      label: 'Template Path',
+      instructions: 'Path to the template that will be used to render the product data',
+      required: true,
+      name: 'templatePath',
+      value: settings['templatePath'],
+      errors: settings.getErrors('templatePath'),
+      suggestions: craft.cp.getTemplateSuggestions(),
+      code: true
+    }) }}
+
+    {{ forms.autosuggestField({
+      label: 'Preview Template',
+      instructions: 'Path of the template used to preview a product within Craft.',
+      required: true,
+      name: 'previewPath',
+      value: settings['previewPath'],
+      errors: settings.getErrors('previewPath'),
+      suggestions: craft.cp.getTemplateSuggestions(),
+      code: true
+    }) }}
+  {% endnamespace %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{% extends 'craft-shopify/settings/_layout' %}
+{% import "_includes/forms" as forms %}
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+  {
+    label: 'Field Layouts',
+    url: url('craft-shopify/settings/field-layouts')
+  }
+] %}
+
+{% block content %}
+  <h2>Product Fields</h2>
+  {{ actionInput('craft-shopify/default/save-field-layout') }}
+  {{ csrfInput() }}
+
+  {{ forms.fieldLayoutDesignerField({
+    fieldLayout: craft.app.fields.getLayoutByType(
+      'onedesign\\craftshopify\\elements\\Product'
+    ),
+  }) }}
+{% endblock %}
