@@ -25,14 +25,16 @@
 
   <div id="shopifyData" class="meta">
 
+    {% if previewUrl ?? false %}
     <div class="field">
       <h5 class="heading">Preview</h5>
       <div class="value">
-        <a href="{{ cpUrl('craft-shopify/products/' ~ product.id ~ '/preview') }}" target="_blank" rel="noopener">
+        <a href="{{ previewUrl }}" target="_blank" rel="noopener">
           Open Preview
         </a>
       </div>
     </div>
+    {% endif %}
 
     <div class="field">
       <h5 class="heading">Shopify ID</h5>

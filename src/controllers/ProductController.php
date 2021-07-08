@@ -14,6 +14,7 @@ use Craft;
 use craft\errors\ElementNotFoundException;
 use craft\helpers\Queue;
 use craft\helpers\StringHelper;
+use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use craft\web\twig\TemplateLoaderException;
 use craft\web\View;
@@ -107,6 +108,9 @@ class ProductController extends Controller
 
         /** @var Product $product */
         $variables['bodyClass'] = 'edit-product';
+        if (CraftShopify::$plugin->getSettings()->previewPath) {
+            $variables['previewUrl'] = UrlHelper::cpUrl('craft-shopify/products/' . $product->id . '/preview');
+        }
 
         return $this->renderTemplate('craft-shopify/products/_edit', $variables);
     }
