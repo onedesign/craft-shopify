@@ -38,7 +38,7 @@ class ProductController extends Controller
     /**
      * @var string[]
      */
-    protected $allowAnonymous = ['sync-product'];
+    protected $allowAnonymous = [];
 
 
     /**
