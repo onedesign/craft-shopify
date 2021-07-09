@@ -1,8 +1,14 @@
 # Craft Shopify plugin for Craft CMS 3.x
 
-Bring Shopify products into Craft. 
-
 ![Screenshot](resources/img/plugin-logo.png)
+
+This plugin will allow you to use Craft in order to manage custom data for a Shopify install. Products from Shopify can be pulled into Craft and stored as custom elements where you can attach and render fields as desired. On save, templates are rendered and data is stored within Shopify metafields for rendering on their platform.
+
+The plugin runs on the `AFTER_SAVE` event for Product elements. On this event, a queue task is created that will render the template set in the settings and send that HTML to Shopify to be stored in a `cms.body_html` metafield on the product. This allows you to render the crft data with `{{ product.metafields.cms.body_html }}` in your liquid tempaltes. 
+
+If you save an entry that is related to one of your product elements, the plugin will attempt to update all products that effected by your change. 
+
+**Note** Because Shopify caches metafields fairly aggressively it can take up to a minute before changes pushed by the plugin are displayed on the page. 
 
 ## Requirements
 
@@ -30,16 +36,6 @@ To install the plugin, follow these instructions.
         composer require onedesign/craft-shopify
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Craft Shopify.
-
-## Craft Shopify Overview
-
-This plugin will allow you to use Craft in order to manage custom data for a Shopify install. Products from Shopify can be pulled into Craft and stored as custom elements where you can attach and render fields as desired. On save, templates are rendered and data is stored within Shopify metafields for rendering on their platform.
-
-The plugin runs on the `AFTER_SAVE` event for Product elements. On this event, a queue task is created that will render the template set in the settings and send that HTML to Shopify to be stored in a `cms.body_html` metafield on the product. This allows you to render the crft data with `{{ product.metafields.cms.body_html }}` in your liquid tempaltes. 
-
-If you save an entry that is related to one of your product elements, the plugin will attempt to update all products that effected by your change. 
-
-**Note** Because Shopify caches metafields fairly aggressively it can take up to a minute before changes pushed by the plugin are displayed on the page. 
 
 ## Configuring Craft Shopify
 
