@@ -16,7 +16,6 @@ use craft\helpers\Queue;
 use craft\helpers\StringHelper;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
-use craft\web\twig\TemplateLoaderException;
 use craft\web\View;
 use onedesign\craftshopify\CraftShopify;
 use onedesign\craftshopify\elements\Product;
@@ -72,6 +71,7 @@ class ProductController extends Controller
      *
      * @param int|null $productId
      * @return Response
+     * @throws NotFoundHttpException
      */
     public function actionPreview(int $productId = null): ?Response
     {
