@@ -37,6 +37,11 @@ class WebhookResponse extends Model
     /**
      * @var string|null
      */
+    public $webhookId;
+
+    /**
+     * @var string|null
+     */
     public $payload;
 
     /**

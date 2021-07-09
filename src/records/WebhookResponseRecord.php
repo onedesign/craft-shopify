@@ -21,6 +21,7 @@ use craft\helpers\Json;
  * @property string $payload
  * @property string $errors
  * @property string $type
+ * @property string $webhookId
  */
 class WebhookResponseRecord extends ActiveRecord
 {

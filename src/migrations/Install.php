@@ -88,6 +88,7 @@ class Install extends Migration
         if ($webhookTable === null) {
             $this->createTable('{{%shopifywebhooks}}', [
                 'id' => $this->primaryKey(),
+                'webhookId' => $this->text()->notNull(),
                 'payload' => $this->text(),
                 'errors' => $this->text(),
                 'type' => $this->string(255),

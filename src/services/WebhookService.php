@@ -35,6 +35,7 @@ class WebhookService extends Component
         $record->errors = $request->errors;
         $record->uid = StringHelper::UUID();
         $record->type = $request->topic;
+        $record->webhookId = $request->webhookId;
 
         return $record->save();
     }

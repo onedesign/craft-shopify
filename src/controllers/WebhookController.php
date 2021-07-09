@@ -89,16 +89,19 @@ class WebhookController extends Controller
         $request = Craft::$app->getRequest();
 
         $topic = $request->getHeaders()->get('X-Shopify-Topic');
+        $webhookId = $request->getHeaders()->get('X-Shopify-Webhook-Id');
+        $payload = $request->getRawBody();
 
         $response = new WebhookResponse([
             'topic' => $topic,
-            'payload' => $request->getRawBody()
+            'payload' => $payload,
+            'webhookId' => $webhookId
         ]);
 
         switch ($topic) {
             case 'products/update':
             case 'products/create':
-                $data = Json::decode($request->getRawBody());
+                $data = Json::decode($payload);
                 $product = CraftShopify::$plugin->product->updateProduct($data);
 
                 if (!Craft::$app->getElements()->saveElement($product)) {

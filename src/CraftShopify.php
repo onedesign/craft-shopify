@@ -53,7 +53,7 @@ class CraftShopify extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.1.1';
+    public $schemaVersion = '1.2.0';
 
     /**
      * @var bool
