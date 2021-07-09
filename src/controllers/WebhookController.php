@@ -1,6 +1,6 @@
 <?php
 /**
- * slumberkins module for Craft CMS 3.x
+ * craft-shopify module for Craft CMS 3.x
  *
  * @link      https://onedesigncompany.com
  * @copyright Copyright (c) 2021 One Design Company
@@ -21,7 +21,7 @@ use yii\web\ForbiddenHttpException;
 
 /**
  * @author    One Design Company
- * @package   slumberkins
+ * @package   craft-shopify
  * @since     1.0.0
  */
 class WebhookController extends Controller

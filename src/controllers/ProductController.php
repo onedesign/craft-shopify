@@ -1,6 +1,6 @@
 <?php
 /**
- * slumberkins module for Craft CMS 3.x
+ * craft-shopify module for Craft CMS 3.x
  *
  * @link      https://onedesigncompany.com
  * @copyright Copyright (c) 2021 One Design Company
@@ -22,14 +22,13 @@ use onedesign\craftshopify\elements\Product;
 use onedesign\craftshopify\jobs\SyncProduct;
 use Throwable;
 use yii\base\Exception;
-use yii\base\ExitException;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
  * @author    One Design Company
- * @package   slumberkins
+ * @package   craft-shopify
  * @since     1.0.0
  */
 class ProductController extends Controller
@@ -41,9 +40,9 @@ class ProductController extends Controller
 
 
     /**
-     * @throws ExitException
+     * @return Response
      */
-    public function actionIndex()
+    public function actionIndex(): Response
     {
         return $this->renderTemplate('craft-shopify/products');
     }
@@ -52,6 +51,7 @@ class ProductController extends Controller
      * Preps product edit variables
      *
      * @param array $variables
+     * @throws NotFoundHttpException
      */
     private function prepEditProductVariables(array &$variables)
     {
@@ -95,7 +95,9 @@ class ProductController extends Controller
      * Edit view for a product element
      *
      * @param int|null $productId
+     * @param Product|null $product
      * @return Response
+     * @throws NotFoundHttpException
      */
     public function actionEditProduct(int $productId = null, Product $product = null): Response
     {
@@ -168,7 +170,10 @@ class ProductController extends Controller
     /**
      * Sync Craft product with Shopify
      *
+     * @return Response
      * @throws BadRequestHttpException
+     * @throws \PHPShopify\Exception\ApiException
+     * @throws \PHPShopify\Exception\CurlException
      */
     public function actionSyncProducts(): Response
     {

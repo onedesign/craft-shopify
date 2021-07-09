@@ -1,6 +1,6 @@
 <?php
 /**
- * slumberkins-cms module for Craft CMS 3.x
+ * craft-shopify-cms module for Craft CMS 3.x
  *
  * @link      https://onedesigncompany.com
  * @copyright Copyright (c) 2021 One Design Company
@@ -15,7 +15,7 @@ use craft\helpers\Json;
 
 /**
  * @author    One Design Company
- * @package   slumberkins-cms
+ * @package   craft-shopify-cms
  * @since     1.0.0
  *
  * @property string $payload
