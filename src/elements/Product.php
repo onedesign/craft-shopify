@@ -110,6 +110,22 @@ class Product extends Element
     /**
      * @inheritdoc
      */
+    protected static function defineDefaultTableAttributes(string $source): array
+    {
+        return [
+            'title',
+            'thumb',
+            'productType',
+            'shopifyId',
+            'shopifyView',
+            'shopifyEdit',
+        ];
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     protected static function defineTableAttributes(): array
     {
         return [
@@ -119,6 +135,8 @@ class Product extends Element
             'productType' => ['label' => Craft::t('craft-shopify', 'Product Type')],
             'shopifyView' => ['label' => Craft::t('craft-shopify', 'Shopify View URL')],
             'shopifyEdit' => ['label' => Craft::t('craft-shopify', 'Shopify Edit URL')],
+            'dateUpdated' => ['label' => Craft::t('app', 'Date Updated')],
+            'dateCreated' => ['label' => Craft::t('app', 'Date Created')],
         ];
     }
 
