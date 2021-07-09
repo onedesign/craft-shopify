@@ -63,6 +63,11 @@ class Product extends Element
      */
     public ?int $bodyHtmlMetafieldId = null;
 
+    /**
+     * @var bool
+     */
+    public $isWebhookUpdate = false;
+
 
     /**
      * @inheritdoc
@@ -348,11 +353,14 @@ class Product extends Element
         $productRecord->dateCreated = $this->dateCreated;
 
         $productRecord->save(false);
-        Queue::push(new PushProductData([
-            'productId' => $this->id,
-        ]));
 
         $this->id = $productRecord->id;
+
+        if (!$this->isWebhookUpdate) {
+            Queue::push(new PushProductData([
+                'productId' => $this->id,
+            ]));
+        }
 
         parent::afterSave($isNew);
     }

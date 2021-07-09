@@ -11,11 +11,14 @@ namespace onedesign\craftshopify\controllers;
 
 
 use Craft;
+use craft\errors\ElementNotFoundException;
 use craft\helpers\Json;
 use craft\web\Controller;
 use onedesign\craftshopify\CraftShopify;
 use onedesign\craftshopify\models\WebhookResponse;
+use Throwable;
 use yii\base\Action;
+use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 
@@ -81,6 +84,9 @@ class WebhookController extends Controller
      *
      * @throws BadRequestHttpException
      * @throws ForbiddenHttpException
+     * @throws Throwable
+     * @throws ElementNotFoundException
+     * @throws Exception
      */
     public function actionIndex()
     {
@@ -103,6 +109,7 @@ class WebhookController extends Controller
             case 'products/create':
                 $data = Json::decode($payload);
                 $product = CraftShopify::$plugin->product->updateProduct($data);
+                $product->isWebhookUpdate = true;
 
                 if (!Craft::$app->getElements()->saveElement($product)) {
                     Craft::error('Failed to save product. ' . $product->getErrors(), __METHOD__);
