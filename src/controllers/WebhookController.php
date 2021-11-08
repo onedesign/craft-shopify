@@ -122,6 +122,7 @@ class WebhookController extends Controller
             case 'products/delete':
                 if (!CraftShopify::$plugin->product->deleteByShopifyId($data['id'])) {
                     Craft::error('Failed to delete product '. $data['id'], __METHOD__);
+                    $response->errors = "Failed to delete product " . $data['id'];
                 }
                 break;
         }
