@@ -2,7 +2,6 @@
     "name": "onedesign/craft-shopify",
     "description": "Bring Shopify products into Craft",
     "type": "craft-plugin",
-    "version": "1.0.0",
     "keywords": [
         "craft",
         "cms",
