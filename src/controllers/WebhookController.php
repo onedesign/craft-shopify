@@ -93,7 +93,7 @@ class WebhookController extends Controller
     public function actionIndex(): Response
     {
         $this->requirePostRequest();
-        // $this->verifySignature();
+        $this->verifySignature();
         $request = Craft::$app->getRequest();
 
         $topic = $request->getHeaders()->get('X-Shopify-Topic');
