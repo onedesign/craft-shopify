@@ -28,6 +28,7 @@ use onedesign\craftshopify\jobs\PushProductData;
 use onedesign\craftshopify\records\ProductRecord;
 use PHPShopify\Exception\ApiException;
 use PHPShopify\Exception\CurlException;
+use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -202,6 +203,31 @@ class ProductService extends Component
         $this->populateProductModel($product, $shopifyData);
 
         return $product;
+    }
+
+    /**
+     * Delete a product by Shopify ID
+     *
+     * @param $shopifyId
+     * @return bool
+     * @throws Throwable
+     */
+    public function deleteByShopifyId($shopifyId): bool
+    {
+        $product = Product::find()->shopifyId($shopifyId)->one();
+        if (!$product) {
+            Craft::info("Shopify ID $shopifyId not found");
+            return false;
+        }
+
+        if (!Craft::$app->getElements()->deleteElement($product)) {
+            $errors = Json::encode($product->getErrors());
+            Craft::error("Failed to delete product $product->id: $errors");
+            return false;
+        }
+
+        Craft::info("Shopify ID: $shopifyId / Craft ID: $product->id successfully deleted.");
+        return true;
     }
 
 

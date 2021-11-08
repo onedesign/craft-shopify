@@ -15,12 +15,14 @@ use craft\errors\ElementNotFoundException;
 use craft\helpers\Json;
 use craft\web\Controller;
 use onedesign\craftshopify\CraftShopify;
+use onedesign\craftshopify\elements\Product;
 use onedesign\craftshopify\models\WebhookResponse;
 use Throwable;
 use yii\base\Action;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * @author    One Design Company
@@ -88,7 +90,7 @@ class WebhookController extends Controller
      * @throws ElementNotFoundException
      * @throws Exception
      */
-    public function actionIndex()
+    public function actionIndex(): Response
     {
         $this->requirePostRequest();
         $this->verifySignature();
@@ -104,10 +106,11 @@ class WebhookController extends Controller
             'webhookId' => $webhookId
         ]);
 
+        $data = Json::decode($payload);
+
         switch ($topic) {
             case 'products/update':
             case 'products/create':
-                $data = Json::decode($payload);
                 $product = CraftShopify::$plugin->product->updateProduct($data);
                 $product->isWebhookUpdate = true;
 
@@ -115,8 +118,16 @@ class WebhookController extends Controller
                     Craft::error('Failed to save product. ' . $product->getErrors(), __METHOD__);
                     $response->errors = Json::encode($product->getErrors());
                 }
+                break;
+            case 'products/delete':
+                if (!CraftShopify::$plugin->product->deleteByShopifyId($data['id'])) {
+                    Craft::error('Failed to delete product '. $data['id'], __METHOD__);
+                    $response->errors = "Failed to delete product " . $data['id'];
+                }
+                break;
         }
 
         CraftShopify::$plugin->webhook->saveResponse($response);
+        return $this->asRaw('Webhook received');
     }
 }

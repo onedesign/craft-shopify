@@ -12,3 +12,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Ability to associate fields with Product element
 - Push Product Element updates to Shopify Metafields
 - When saving Entries check for related products and update the metafield data
+- Delete product from Craft when `products/delete` webhook received
+- Add utility to purge all products no longer in Shopify
