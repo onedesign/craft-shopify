@@ -12,6 +12,7 @@ namespace onedesign\craftshopify\controllers;
 
 use Craft;
 use craft\errors\ElementNotFoundException;
+use craft\helpers\ArrayHelper;
 use craft\helpers\Queue;
 use craft\helpers\StringHelper;
 use craft\helpers\UrlHelper;
@@ -194,6 +195,17 @@ class ProductController extends Controller
         }
 
         $products = CraftShopify::$plugin->shopify->getAllProducts($params);
+        $shopifyIds = ArrayHelper::getColumn($products, 'id');
+
+        $removed = Product::find()
+            ->select(['elements.id', 'shopifyId'])
+            ->where(['not in', 'shopifyId', $shopifyIds])
+            ->all();
+
+        $removedIds = ArrayHelper::getColumn($removed, 'shopifyId');
+        foreach ($removedIds as $removedId) {
+            CraftShopify::$plugin->product->deleteByShopifyId($removedId);
+        }
 
         foreach ($products as $product) {
             $job = new SyncProduct();

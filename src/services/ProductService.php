@@ -226,6 +226,7 @@ class ProductService extends Component
             return false;
         }
 
+        Craft::info("Shopify ID: $shopifyId / Craft ID: $product->id successfully deleted.");
         return true;
     }
 
