@@ -21,6 +21,8 @@ use craft\web\View;
 use onedesign\craftshopify\CraftShopify;
 use onedesign\craftshopify\elements\Product;
 use onedesign\craftshopify\jobs\SyncProduct;
+use PHPShopify\Exception\ApiException;
+use PHPShopify\Exception\CurlException;
 use Throwable;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
@@ -169,12 +171,59 @@ class ProductController extends Controller
     }
 
     /**
+     * Remove all products that are no longer in Shopify
+     *
+     * @return Response
+     * @throws BadRequestHttpException
+     * @throws Throwable
+     * @throws ApiException
+     * @throws CurlException
+     */
+    public function actionPurgeProducts(): ?Response
+    {
+        $this->requirePostRequest();
+
+        $params = [
+            'published_status' => 'published',
+            'status' => 'active,draft',
+            'limit' => -1
+        ];
+
+        $products = CraftShopify::$plugin->shopify->getAllProducts($params);
+        $shopifyIds = ArrayHelper::getColumn($products, 'id');
+        $errorCount = 0;
+        $successCount = 0;
+
+        $removed = Product::find()
+            ->select(['elements.id', 'shopifyId'])
+            ->where(['not in', 'shopifyId', $shopifyIds])
+            ->all();
+
+        $removedIds = ArrayHelper::getColumn($removed, 'shopifyId');
+        foreach ($removedIds as $removedId) {
+            if (!CraftShopify::$plugin->product->deleteByShopifyId($removedId)) {
+                $errorCount++;
+            } else {
+                $successCount++;
+            }
+        }
+
+        if ($errorCount > 0) {
+            $this->setFailFlash('Failed to remove ' . $errorCount . ' products');
+            return null;
+        }
+
+        $this->setSuccessFlash('Successfully removed ' . $successCount . ' products');
+        return $this->redirectToPostedUrl();
+    }
+
+    /**
      * Sync Craft product with Shopify
      *
      * @return Response
      * @throws BadRequestHttpException
-     * @throws \PHPShopify\Exception\ApiException
-     * @throws \PHPShopify\Exception\CurlException
+     * @throws ApiException
+     * @throws CurlException
      */
     public function actionSyncProducts(): Response
     {
@@ -195,17 +244,7 @@ class ProductController extends Controller
         }
 
         $products = CraftShopify::$plugin->shopify->getAllProducts($params);
-        $shopifyIds = ArrayHelper::getColumn($products, 'id');
 
-        $removed = Product::find()
-            ->select(['elements.id', 'shopifyId'])
-            ->where(['not in', 'shopifyId', $shopifyIds])
-            ->all();
-
-        $removedIds = ArrayHelper::getColumn($removed, 'shopifyId');
-        foreach ($removedIds as $removedId) {
-            CraftShopify::$plugin->product->deleteByShopifyId($removedId);
-        }
 
         foreach ($products as $product) {
             $job = new SyncProduct();

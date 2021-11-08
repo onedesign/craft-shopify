@@ -60,3 +60,19 @@
     </div>
   </form>
 </div>
+<hr>
+<div>
+  <form class="utility" method="post">
+    {{ csrfInput() }}
+    {{ actionInput('craft-shopify/product/purge-products') }}
+
+    <h2>Purge Products</h2>
+    <p>Delete all produts that are no longer on Shopify.</p>
+
+    <div>
+      <button type="submit" class="btn submit">
+        Purge Products
+      </button>
+    </div>
+  </form>
+</div>
