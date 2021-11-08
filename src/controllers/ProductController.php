@@ -178,6 +178,7 @@ class ProductController extends Controller
      * @throws Throwable
      * @throws ApiException
      * @throws CurlException
+     * @since 1.1.0
      */
     public function actionPurgeProducts(): ?Response
     {
