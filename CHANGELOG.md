@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## Unreleased
 
+### Added
+- `craft-shopify/webhook/purge` command to purge webhooks older than X days
+- `CraftShopify::$plugin->webhook->purgeResponses()` Method to purge webhook records via queue
+- Utility for purging webhook records
+
 ## Updated
 - Now requires Craft 3.2 or higher
 

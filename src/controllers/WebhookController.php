@@ -15,11 +15,11 @@ use craft\errors\ElementNotFoundException;
 use craft\helpers\Json;
 use craft\web\Controller;
 use onedesign\craftshopify\CraftShopify;
-use onedesign\craftshopify\elements\Product;
 use onedesign\craftshopify\models\WebhookResponse;
 use Throwable;
 use yii\base\Action;
 use yii\base\Exception;
+use yii\db\StaleObjectException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -130,4 +130,26 @@ class WebhookController extends Controller
         CraftShopify::$plugin->webhook->saveResponse($response);
         return $this->asRaw('Webhook received');
     }
+
+    /**
+     * Purge old webhook records
+     *
+     * @return Response
+     * @throws BadRequestHttpException
+     * @throws ForbiddenHttpException
+     * @throws Throwable
+     * @throws StaleObjectException
+     */
+    public function actionPurge(): Response
+    {
+        $this->requirePostRequest();
+        $this->requireAdmin(false);
+        $olderThan = (int)$this->request->getParam('olderThan');
+
+        CraftShopify::$plugin->webhook->purgeResponses($olderThan);
+
+        $this->setSuccessFlash("Purging Webhook records older than $olderThan days.");
+        return $this->redirectToPostedUrl();
+    }
 }
+
