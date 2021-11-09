@@ -81,7 +81,7 @@
   <form class="utility" method="post">
     {{ csrfInput() }}
     {{ actionInput('craft-shopify/webhook/purge') }}
-    {{ hiddenInput('olderThan', '90') }}
+    {{ hiddenInput('olderThan', '30') }}
 
     <h2>Purge Webhook Records</h2>
 
