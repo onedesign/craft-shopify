@@ -11,9 +11,12 @@ namespace onedesign\craftshopify\services;
 
 
 use craft\base\Component;
+use craft\helpers\Queue;
 use craft\helpers\StringHelper;
+use onedesign\craftshopify\jobs\PurgeWebhookResponses;
 use onedesign\craftshopify\models\WebhookResponse;
 use onedesign\craftshopify\records\WebhookResponseRecord;
+use Throwable;
 
 /**
  * @author    One Design Company
@@ -40,4 +43,16 @@ class WebhookService extends Component
         return $record->save();
     }
 
+    /**
+     * Delete webhook responses older than X days
+     *
+     * @param int $olderThan
+     * @throws Throwable
+     */
+    public function purgeResponses(int $olderThan = 30)
+    {
+        Queue::push(new PurgeWebhookResponses([
+            'olderThan' => $olderThan
+        ]));
+    }
 }

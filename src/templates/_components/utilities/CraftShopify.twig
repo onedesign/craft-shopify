@@ -76,3 +76,19 @@
     </div>
   </form>
 </div>
+<hr>
+<div>
+  <form class="utility" method="post">
+    {{ csrfInput() }}
+    {{ actionInput('craft-shopify/webhook/purge') }}
+    {{ hiddenInput('olderThan', '90') }}
+
+    <h2>Purge Webhook Records</h2>
+
+    <div>
+      <button type="submit" class="btn submit">
+        Purge Records
+      </button>
+    </div>
+  </form>
+</div>
