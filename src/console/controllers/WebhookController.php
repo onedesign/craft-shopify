@@ -48,12 +48,6 @@ class WebhookController extends Controller
      */
     public function actionPurge()
     {
-        if (!$this->olderThan) {
-            $this->olderThan = $this->prompt('Older than how many days?', [
-                'default' => 30
-            ]);
-        }
-
         CraftShopify::$plugin->webhook->purgeResponses($this->olderThan);
         return ExitCode::OK;
     }
