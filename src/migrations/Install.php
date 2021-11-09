@@ -107,10 +107,17 @@ class Install extends Migration
     protected function createIndexes()
     {
         $this->createIndex(
-            $this->db->getIndexName(),
+            null,
             '{{%shopifyproducts}}',
             'shopifyId',
             true
+        );
+
+        $this->createIndex(
+            null,
+            '{{%shopifywebhooks}}',
+            'dateCreated',
+            false
         );
 
         // Additional commands depending on the db driver
