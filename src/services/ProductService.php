@@ -220,7 +220,7 @@ class ProductService extends Component
             return false;
         }
 
-        if (!Craft::$app->getElements()->deleteElement($product)) {
+        if (!Craft::$app->getElements()->deleteElement($product, true)) {
             $errors = Json::encode($product->getErrors());
             Craft::error("Failed to delete product $product->id: $errors");
             return false;
