@@ -168,7 +168,7 @@ class ProductService extends Component
                 'namespace' => self::METAFIELD_NAMESPACE,
                 'key' => 'body_html',
                 'value' => '<!-- CMS CONTENT -->',
-                'value_type' => 'string'
+                'type' => 'string'
             ]);
 
             $productRecord->bodyHtmlMetafieldId = $metafield['id'];
@@ -182,7 +182,7 @@ class ProductService extends Component
             $client->Product($product->shopifyId)->Metafield($productRecord->bodyHtmlMetafieldId)->put([
                 'id' => $productRecord->bodyHtmlMetafieldId,
                 'value' => $html,
-                'value_type' => 'string'
+                'type' => 'string'
             ]);
         }
     }
