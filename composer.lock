@@ -2434,16 +2434,16 @@
         },
         {
             "name": "phpclassic/php-shopify",
-            "version": "v1.1.20",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpclassic/php-shopify.git",
-                "reference": "00b6142f2b9a96ab5234e9250e9a0af221a6fa71"
+                "reference": "b815f085b19b314be5199bb65918acfbc3ba6236"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpclassic/php-shopify/zipball/00b6142f2b9a96ab5234e9250e9a0af221a6fa71",
-                "reference": "00b6142f2b9a96ab5234e9250e9a0af221a6fa71",
+                "url": "https://api.github.com/repos/phpclassic/php-shopify/zipball/b815f085b19b314be5199bb65918acfbc3ba6236",
+                "reference": "b815f085b19b314be5199bb65918acfbc3ba6236",
                 "shasum": ""
             },
             "require": {
@@ -2479,9 +2479,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpclassic/php-shopify/issues",
-                "source": "https://github.com/phpclassic/php-shopify/tree/v1.1.20"
+                "source": "https://github.com/phpclassic/php-shopify/tree/v1.2.3"
             },
-            "time": "2021-09-13T06:37:44+00:00"
+            "time": "2022-10-24T07:11:24+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -8726,5 +8726,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

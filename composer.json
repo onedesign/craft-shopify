@@ -45,5 +45,11 @@
             "craftShopifyService": "onedesign\\craftshopify\\services\\CraftShopifyService"
         },
         "class": "onedesign\\craftshopify\\CraftShopify"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
 }
